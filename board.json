@@ -1,0 +1,15 @@
+{
+    "To Do": [
+        "\"Here's the update of the today's standard",
+        "Summarize the tasks that the team will work on today based on the following text\""
+    ],
+    "In Progress": [
+        "Develop the initial version of ScrumBot"
+    ],
+    "Done": [],
+    "Blockers": [
+        "Here's the update of the today's standard",
+        "Assign John the task of updating the login page design",
+        "Summarize any blockers, impediments, or problems mentioned in the following text"
+    ]
+}
