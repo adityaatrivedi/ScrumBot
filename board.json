@@ -1,7 +1,11 @@
 {
     "To Do": [
         "\"Here's the update of the today's standard",
-        "Summarize the tasks that the team will work on today based on the following text\""
+        "Summarize the tasks that the team will work on today based on the following text\"",
+        "Tasks to be worked on today include updating the login page design",
+        "Pre-I need to fix the bug in the payments API",
+        "I finished the documentation for the onboarding process",
+        "Implement user authentication"
     ],
     "In Progress": [
         "Develop the initial version of ScrumBot"
@@ -10,6 +14,10 @@
     "Blockers": [
         "Here's the update of the today's standard",
         "Assign John the task of updating the login page design",
-        "Summarize any blockers, impediments, or problems mentioned in the following text"
+        "Summarize any blockers, impediments, or problems mentioned in the following text",
+        "\"Here's the update of the today's standard",
+        "First, assign John the task of updating the login page design\" \"I need to fix the bug in the payments API",
+        "It is a blocker and should be marked as urgent and not started yet\"",
+        "Database connection issues"
     ]
 }

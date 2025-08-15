@@ -1,0 +1,6 @@
+openai-whisper
+transformers
+torch
+soundfile
+librosa
+certifi

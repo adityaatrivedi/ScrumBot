@@ -1,21 +1,28 @@
 # ScrumBot: Automated Scrum Transcription and Task Board Management
 
-ScrumBot is a Python script that automates the process of updating a task board by listening to daily stand-up recordings. It uses open-source AI models to transcribe the audio, summarize key points, and update a JSON-based task board.
+ScrumBot is a Python application that automates the process of updating a task board by listening to daily stand-up recordings. It uses open-source AI models to transcribe the audio, summarize key points, and update a JSON-based task board.
 
-This tool is designed to be simple, educational, and run entirely on a local machine without relying on paid APIs.
+This tool is designed to be educational, modular, and run entirely on a local machine without relying on paid APIs.
+
+## Features
+
+- **Speech-to-Text**: Uses OpenAI's Whisper model for accurate transcription
+- **Text Summarization**: Employs Hugging Face Transformers with BART model to extract tasks and blockers
+- **Task Board Management**: Updates a JSON-based Kanban board with new tasks and blockers
+- **Modular Design**: Well-organized codebase with separate modules for each functionality
+- **Error Handling**: Comprehensive error handling for robust operation
+- **Testing**: Unit tests for core functionality
 
 ## How It Works
 
 1.  **Audio Input**: You provide an audio file (MP3 or WAV) of your team's daily stand-up meeting.
-2.  **Transcription**: The script uses OpenAI's **Whisper** model to convert the speech in the audio file into text.
-3.  **Summarization**: The transcript is then fed to a **BART** summarization model (from Hugging Face) to extract three key pieces of information:
-    *   What each person accomplished yesterday.
-    *   What they plan to do today.
-    *   Any blockers they are facing.
-4.  **Task Board Update**: The script reads a local `board.json` file, which represents a simple Kanban-style board.
-    *   New tasks from the "today" summary are added to the "To Do" column.
+2.  **Transcription**: The application uses OpenAI's **Whisper** model to convert the speech in the audio file into text.
+3.  **Summarization**: The transcript is then fed to a **BART** summarization model (from Hugging Face) to extract:
+    *   Today's tasks for the team
+    *   Any blockers or impediments
+4.  **Task Board Update**: The application reads a local `board.json` file, which represents a simple Kanban-style board.
+    *   New tasks are added to the "To Do" column.
     *   Blockers are added to the "Blockers" column.
-    *   (Note: Moving tasks to "Done" is a complex NLP problem; this version focuses on adding new tasks and blockers).
 5.  **Save**: The updated task board is saved back to `board.json`.
 
 ## Setup and Installation
@@ -49,12 +56,10 @@ source venv/bin/activate
 
 **3. Install Python Dependencies**
 
-The core AI and audio processing libraries are installed via pip. Note that `torch` is a large library and may take some time to download.
+Install dependencies using the requirements.txt file:
 
 ```bash
-pip install transformers torch
-pip install openai-whisper
-pip install soundfile librosa
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -63,8 +68,43 @@ pip install soundfile librosa
 2.  Run the script from your terminal, passing the path to the audio file as an argument:
 
     ```bash
-    python scrumbot.py /path/to/your/scrum_meeting.mp3
+    python scrumbot_main.py /path/to/your/scrum_meeting.mp3
     ```
 
-3.  After the script finishes, you can inspect the `board.json` file to see the updated tasks and blockers. The full transcript and summary will also be printed to the console.
+3.  To display the updated task board after processing:
+
+    ```bash
+    python scrumbot_main.py /path/to/your/scrum_meeting.mp3 --display-board
+    ```
+
+4.  To specify a custom task board file:
+
+    ```bash
+    python scrumbot_main.py /path/to/your/scrum_meeting.mp3 --board-file my_board.json
+    ```
+
+5.  After the script finishes, you can inspect the `board.json` file to see the updated tasks and blockers. The full transcript and summary will also be printed to the console.
+
+## Running Tests
+
+To run the unit tests:
+
+```bash
+python -m unittest discover tests
+```
+
+## Project Structure
+
+```
+├── scrumbot_main.py        # Main application entry point
+├── requirements.txt        # Project dependencies
+├── board.json             # Task board data (auto-generated)
+├── scrumbot/              # Core modules
+│   ├── __init__.py        # Package initializer
+│   ├── transcription.py   # Audio transcription functionality
+│   ├── summarization.py   # Text summarization functionality
+│   └── task_board.py      # Task board management
+└── tests/                 # Unit tests
+    └── test_task_board.py # Tests for task board functionality
+```
 
