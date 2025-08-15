@@ -2,7 +2,8 @@ import unittest
 import json
 import os
 import tempfile
-from scrumbot.task_board import update_task_board
+from unittest.mock import patch
+from scrumbot.task_board import update_task_board, load_task_board
 
 
 class TestTaskBoard(unittest.TestCase):
@@ -71,9 +72,6 @@ class TestTaskBoard(unittest.TestCase):
 
     def test_load_task_board_creates_default_if_missing(self):
         """Test that load_task_board returns default structure if file doesn't exist."""
-        # Import the function we're testing
-        from scrumbot.task_board import load_task_board
-        
         board = load_task_board(self.board_file)
         
         self.assertIn("To Do", board)
@@ -84,6 +82,35 @@ class TestTaskBoard(unittest.TestCase):
         # All sections should be empty lists
         for section in board.values():
             self.assertIsInstance(section, list)
+
+    def test_update_task_board_handles_json_decode_error(self):
+        """Test that update_task_board handles a JSONDecodeError gracefully."""
+        # Create a corrupted JSON file
+        with open(self.board_file, 'w') as f:
+            f.write("this is not valid json")
+
+        summaries = {
+            "today": "This is a new task that should be added.",
+            "blockers": "This is a new blocker."
+        }
+
+        # This should not raise an exception
+        board = update_task_board(summaries, board_file=self.board_file)
+
+        # The board should be reset and the new items should be added
+        self.assertIn("This is a new task that should be added", board["To Do"])
+        self.assertIn("This is a new blocker", board["Blockers"])
+
+    @patch("builtins.open", side_effect=IOError("Permission denied"))
+    def test_update_task_board_handles_io_error(self, mock_open):
+        """Test that update_task_board raises an IOError when it can't write to the board file."""
+        summaries = {
+            "today": "A task.",
+            "blockers": "A blocker."
+        }
+
+        with self.assertRaises(IOError):
+            update_task_board(summaries, board_file=self.board_file)
 
 
 if __name__ == '__main__':

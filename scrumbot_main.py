@@ -29,6 +29,8 @@ def main():
         parser.add_argument("audio_file", help="The path to the audio file (e.g., mp3, wav).")
         parser.add_argument("--board-file", default="board.json", help="Path to the task board JSON file.")
         parser.add_argument("--display-board", action="store_true", help="Display the current task board after update.")
+        parser.add_argument("--model", choices=["bart", "pegasus", "xsum"], default="bart", 
+                          help="Summarization model to use (default: bart)")
         args = parser.parse_args()
 
         # --- Execute the workflow ---
@@ -38,7 +40,15 @@ def main():
         print(transcript)
         
         # 2. Summarize the transcript to get actionable items.
-        summaries = summarize_transcript(transcript)
+        model_map = {
+            "bart": "facebook/bart-large-cnn",
+            "pegasus": "google/pegasus-xsum",
+            "xsum": "facebook/bart-large-xsum"
+        }
+        model_name = model_map.get(args.model, "facebook/bart-large-cnn")
+        print(f"\n--- Using {args.model.upper()} model for summarization ---")
+        summaries = summarize_transcript(transcript, model_name=model_name)
+            
         print("\n--- Summary ---")
         print(f"Today's Tasks: {summaries['today']}")
         print(f"Blockers: {summaries['blockers']}")

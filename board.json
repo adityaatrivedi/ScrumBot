@@ -5,12 +5,16 @@
         "Tasks to be worked on today include updating the login page design",
         "Pre-I need to fix the bug in the payments API",
         "I finished the documentation for the onboarding process",
-        "Implement user authentication"
+        "Implement user authentication",
+        "John will be updating the login page design",
+        "John will be updating the login page design by Friday"
     ],
     "In Progress": [
         "Develop the initial version of ScrumBot"
     ],
-    "Done": [],
+    "Done": [
+        "I finished the documentation for the onboarding process"
+    ],
     "Blockers": [
         "Here's the update of the today's standard",
         "Assign John the task of updating the login page design",
@@ -18,6 +22,8 @@
         "\"Here's the update of the today's standard",
         "First, assign John the task of updating the login page design\" \"I need to fix the bug in the payments API",
         "It is a blocker and should be marked as urgent and not started yet\"",
-        "Database connection issues"
+        "Database connection issues",
+        "Pre-I need to fix the bug in the payments API",
+        "It is a blocker and should be marked as urgent and not started yet"
     ]
 }
